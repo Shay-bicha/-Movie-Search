@@ -1,25 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import {GetMoviesService} from '../HttpCalls/get-movies.service'; 
+import { Component, OnInit } from "@angular/core";
+import { GetMoviesService } from "../HttpCalls/get-movies.service";
+import { Movie } from '../module/Movie';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.css"]
 })
+
 export class HomeComponent implements OnInit {
- movieName : string = '';
-  constructor(private httpx: GetMoviesService) { }
+  movieName: string = "";
+  movies: Movie[];
+  singleMovie: Movie;
+  showAll: boolean = true;
+  constructor(private httpx: GetMoviesService) {}
 
-  ngOnInit(): void {
-  
+
+  ngOnInit(): void {}
+
+  searchMovie = (value: string) => {
+    this.movieName = value;
+  };
+
+  handelClick() {
+    this.httpx.getMovies(this.movieName)
+    .subscribe((data: any) => {
+      this.movies = data.results;
+      this.showAll = true;
+    });
   }
 
-  searchMovie = (value: string)=>{
-     this.movieName = value;
-     
-  }
-
-  handelClick = ()=>{
-    this.httpx.getMovies(this.movieName);
+  getMovie(idValue){
+    this.httpx.showMovie(idValue)
+    .subscribe((data: any) => {
+      this.singleMovie = data;
+      this.showAll = false;
+    });
   }
 }

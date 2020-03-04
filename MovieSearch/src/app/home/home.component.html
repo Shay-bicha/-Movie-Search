@@ -1,6 +1,25 @@
 <input type="text" (input) = "searchMovie($event.target.value)"/>
-<button (click) = "handelClick()">Search</button>
+<button (click) = "handelClick()" class = "buttonSearch">Search</button>
 
-<app-movies-items></app-movies-items>
+<ng-container *ngIf = "movies && showAll">
+    <app-movies-items 
+    *ngFor = "let movie of movies" 
+    [movie]="movie"
+    (click) = "getMovie(movie.id)"
+    >
+</app-movies-items>
+
+    <div *ngIf = "movies.length === 0">
+        no result
+    </div>
+</ng-container>
+
+
+<app-single-movie [item] = "singleMovie" *ngIf = "singleMovie && showAll === false" ></app-single-movie>
+
+
+
+
+
 
 
