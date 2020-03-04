@@ -1,3 +1,6 @@
-<input type="text"/>
-<button>Search</button>
+<input type="text" (input) = "searchMovie($event.target.value)"/>
+<button (click) = "handelClick()">Search</button>
+
+<app-movies-items></app-movies-items>
+
 
